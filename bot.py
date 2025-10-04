@@ -15,6 +15,13 @@ api_key = os.getenv("OPENROUTER_API_KEY")
 base_url = os.getenv("OPENROUTER_BASE_URL")
 model = os.getenv("OPENROUTER_MODEL")
 
+# api_key = os.getenv("GEMINI_API_KEY")
+# base_url = os.getenv("GEMINI_BASE_URL")
+# model = os.getenv("GEMINI_MODEL")
+# model = "deepseek/deepseek-chat-v3.1:free"
+
+print(f"{'=' * 10}\n{api_key}\n{base_url}\n{model}\n{'=' * 10}\n")
+
 with open("system_prompt.txt", "r") as file:
     system_prompt = file.read()
 
@@ -70,9 +77,9 @@ def query_executor(query):
     try:
         cursor.execute(query)
         conn.commit()
-        return {"success": True, "error": None}
+        return "Query executed Successfully!"
     except sqlite3.Error as e:
-        return {"success": False, "error": repr(e)}
+        return f"Query execution failed:\n{e!r}"
 
 
 def get_table():
@@ -82,6 +89,7 @@ def get_table():
 
 def notify(message):
     print(message)
+    return "Notified the user Successfully!"
 
 def display_to_me():
     return json.dumps(get_table(), indent=2)
@@ -113,20 +121,24 @@ def chat_with_user():
         print("Model responded!")
 
         choice = response.choices[0]
+        print(">>>>>>>>>>", f"{choice.finish_reason = }")
 
         if choice.finish_reason == "tool_calls":
             for tool_call in choice.message.tool_calls:
                 tool_name = tool_call.function.name
                 tool_args = json.loads(tool_call.function.arguments or "{}")
 
+                print("-" * 10)
                 print(f"Tool: {tool_name} with arguments: {tool_args}")
+                print("-" * 10, end='\n\n')
+                
                 result = globals()[tool_name](**tool_args)
 
                 messages.append({
                     "role": "tool",
                     "tool_call_id": tool_call.id,
                     "name": tool_name,
-                    "content": json.dumps(result) if result is not None else "Done"
+                    "content": result if result is not None else "Done"
                 })
 
             waiting_for_tool_result = True
@@ -139,4 +151,8 @@ def chat_with_user():
             waiting_for_tool_result = False
 
 if __name__ == "__main__":
-    chat_with_user()
+    try:
+        chat_with_user()
+    except Exception as e:
+        print("\n\n\n" + "#" * 15, end='\n\n')
+        print(repr(e))
