@@ -2,7 +2,7 @@
 
 A natural language interface for querying supply chain data, built with Streamlit, SQLite, and Google Gemini.
 
-The Live Demo of the application [![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://supply-chain-query-bot.streamlit.app/)
+The Live Demo of the application [Click Here](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://supply-chain-query-bot.streamlit.app/)
 
 
 ## Overview
