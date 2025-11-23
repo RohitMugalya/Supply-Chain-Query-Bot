@@ -2,6 +2,9 @@
 
 A natural language interface for querying supply chain data, built with Streamlit, SQLite, and Google Gemini.
 
+[![Live Demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://supply-chain-query-bot.streamlit.app/)
+
+
 ## Overview
 
 The **Supply Chain Query Bot** empowers users to interact with a supply chain database using plain English. Instead of writing complex SQL queries, users can ask questions like "Show top 20 products with lowest inventory" or "List all open purchase orders," and the bot generates, validates, and executes the SQL safely.
