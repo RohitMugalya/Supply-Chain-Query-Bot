@@ -4,6 +4,7 @@ A natural language interface for querying supply chain data, built with Streamli
 
 The Live Demo of the application [Click Here](https://supply-chain-query-bot.streamlit.app/)
 
+![thumbnail](thumbnail.png)
 
 ## Overview
 
